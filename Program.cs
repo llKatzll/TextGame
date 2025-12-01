@@ -5,7 +5,7 @@
         static int _cursorX = 0;
         static int _cursorY = 0;
 
-        static string _playerGender = "";
+        static string _playerGender = ""; //male /female /another
         static string _playerName = "";
 
         // karma : 악행수치 divine : 선행수치  게임의 흐름을 바꾼다.
@@ -18,7 +18,6 @@
         static int _atk = 5;
         static int _def = 40;
         static int _dgd = 30;
-
 
         static void Main(string[] args)
         {
@@ -47,7 +46,9 @@
 
             int _gotMad = 0;
 
-            while (true)
+            bool _loopAsk = false;
+
+            while (!_loopAsk)
             {
                 //버퍼에 쌓인 키 전부 버리기 (무브스텍 제거)
                 while (Console.KeyAvailable)
@@ -80,17 +81,23 @@
                     case '1':
                         Console.WriteLine("Ok.");
                         Thread.Sleep(1000);
-                        return;
+                        _loopAsk = true;
+                        Console.Clear();
+                        break;
                     case '2':
                         Console.WriteLine("Ok.");
                         Thread.Sleep(1000);
-                        return;
+                        _loopAsk = true;
+                        Console.Clear();
+                        break;
                     case '3':
                         Console.WriteLine("What.");
                         Thread.Sleep(500);
                         Console.WriteLine("Well, I can understand you.");
                         Thread.Sleep(1000);
-                        return;
+                        _loopAsk = true;
+                        Console.Clear();
+                        break;
                     default:
                         if(_gotMad == 1)
                         {
@@ -161,6 +168,64 @@
                         break;
                 }
             }
+
+            Thread.Sleep(500);
+            Console.WriteLine("Next.");
+            Thread.Sleep(500);
+            Console.Clear();
+
+            bool _askingName = false;
+
+            while (!_askingName)
+            {
+                //버퍼에 쌓인 키 전부 버리기 (무브스텍 제거)
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+
+                Console.Clear();
+                Console.WriteLine("What is your name?");
+                Console.Write("Type your name : ");
+                _playerName = Console.ReadLine();
+
+                Console.Clear();
+                Thread.Sleep(1500);
+                Console.WriteLine(_playerName + ".");
+                Thread.Sleep(300);
+                Console.WriteLine("Is this really your name?");
+
+                Console.WriteLine("\n 1. Yes \n 2. No");
+
+                ConsoleKeyInfo _insert = Console.ReadKey(true);
+
+                Console.Clear();
+
+                switch (_insert.KeyChar)
+                {
+                    case '1':
+                        Thread.Sleep(300);
+                        Console.WriteLine("Ok," + _playerName + ".");
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                        Console.WriteLine("Such a good name.");
+                        Thread.Sleep(1000);
+                        _askingName = true;
+                        Console.Clear();
+                        break;
+                    case '2':
+                        Console.Clear();
+                        Thread.Sleep(300);
+                        Console.WriteLine("Huh?- well, Let's change.");
+                        Thread.Sleep(1200);
+                        Console.Clear();
+                        break;
+                }
+            }
+            Thread.Sleep(300);
+            Console.WriteLine(_playerName + ".");
+            Thread.Sleep(200);
+
         }
     }
 }
