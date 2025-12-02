@@ -8,16 +8,23 @@
         static string _playerGender = ""; //male /female /another
         static string _playerName = "";
         static int _age = 0;
-        // karma : 악행수치 divine : 선행수치  게임의 흐름을 바꾼다.
 
+        // karma : 악행수치 divine : 선행수치  게임의 흐름을 바꾼다.
         static int _karma = 0;
         static int _divine = 0;
 
+        //플레이어 스탯
         static int _level = 1;
         static int _hp = 100;
         static int _atk = 5;
         static int _def = 40;
         static int _dgd = 30;
+
+        // 장비 스탯
+        static string _empower = ""; //권능. 딜리터/메모라이즈/부산물
+        static string _weaponName = "";
+        static string _armorName = "";
+        static string[] _accs = { "", "", "" };
 
         static void Main(string[] args)
         {
@@ -318,15 +325,75 @@
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.Clear();
-                Thread.Sleep(200);
+                Thread.Sleep(300);
                 Console.WriteLine("왜 다시 왔는가.");
-                Thread.Sleep(200);
+                Thread.Sleep(300);
                 Console.Clear();
                 Console.WriteLine("그때의 소멸은 그녀가 스스로 초래한 일.");
-                Thread.Sleep(200);
+                Thread.Sleep(300);
                 Console.Clear();
                 Console.WriteLine("너와 나는 일절 관계없다.");
-                Thread.Sleep(200);
+                Thread.Sleep(300);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Clear();
+
+            }
+
+            if (_age == 25 && (_playerName == "Katz" || _playerName == "카츠") && _playerGender == "male")
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Clear();
+                Thread.Sleep(300);
+                Console.WriteLine("그를 따라하는군.");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("넌 그가 세운 계획의 협력자인가?");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("앞으로의 길에 불행이 가득하기를.");
+                Thread.Sleep(300);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Clear();
+
+            }
+
+            if (_age == 25 && (_playerName == "Lev" || _playerName == "레브") && _playerGender == "male")
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Clear();
+                Thread.Sleep(300);
+                Console.WriteLine("그를 따라하는군.");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("의지의 뜻을 거역하는것인가.");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("그는 우리의 세계에 있어 절대악이 되었을터.");
+                Thread.Sleep(300);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Clear();
+
+            }
+
+            if (_age == 28 && (_playerName == "Chronos" || _playerName == "크로노스") && _playerGender == "male")
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Clear();
+                Thread.Sleep(300);
+                Console.WriteLine("그를 따라하는군.");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("넌 그가 세운 계획의 협력자인가?");
+                Thread.Sleep(300);
+                Console.Clear();
+                Console.WriteLine("앞으로의 길에 불행이 가득하기를.");
+                Thread.Sleep(300);
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.Clear();
@@ -338,8 +405,17 @@
                 Thread.Sleep(100);
                 Console.WriteLine(".");
             }
+            Thread.Sleep(500);
             Console.Clear();
             Console.WriteLine("확인했습니다.");
+            Thread.Sleep(1000);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+            Thread.Sleep(1000);
+            Console.WriteLine("환영합니다!");
+            Thread.Sleep(500);
+            Console.WriteLine("짧은 여정을 함께합시다.");
+            Thread.Sleep(1000);
         }
     }
 }
