@@ -22,7 +22,7 @@ namespace TextGame
         static int _level = 1;
         static float _currentHp = 100;
         static float _maxHp = 100;
-        static float _atk = 5;
+        static float _atk = 3;
         static float _def = 40;
         static float _dgd = 30;
 
@@ -472,6 +472,13 @@ namespace TextGame
             }
 
             Console.WriteLine($" {_currentHp}/{_maxHp}" + " }");
+
+            Console.SetCursorPosition(75, 6);
+            Console.Write("[ ATK : " + _atk + " ]");
+            Console.SetCursorPosition(75, 7);
+            Console.Write("[ DEF Chance : " + _def + " ]");
+            Console.SetCursorPosition(75, 8);
+            Console.Write("[ DGD Chance : " + _dgd + " ]");
 
             Console.SetCursorPosition(_cursorX, _cursorY);
         }
