@@ -1,7 +1,12 @@
-﻿namespace TextGame
+﻿using System.Diagnostics;
+using System;
+
+namespace TextGame
 {
     internal class Program
     {
+        static Stopwatch _playTimer = new Stopwatch();
+
         static int _cursorX = 0;
         static int _cursorY = 0;
 
@@ -15,10 +20,11 @@
 
         //플레이어 스탯
         static int _level = 1;
-        static int _hp = 100;
-        static int _atk = 5;
-        static int _def = 40;
-        static int _dgd = 30;
+        static float _currentHp = 100;
+        static float _maxHp = 100;
+        static float _atk = 5;
+        static float _def = 40;
+        static float _dgd = 30;
 
         // 장비 스탯
         static string _empower = ""; //권능. 딜리터/메모라이즈/부산물
@@ -40,7 +46,11 @@
             
         }
 
-
+        static void Clear()
+        {
+            Console.Clear();
+            StatViewer();
+        }
 
         static void GameStart()
         {
@@ -48,11 +58,11 @@
 
             Console.WriteLine("안녕하세요.");
             Thread.Sleep(1600);
-            Console.Clear();
+            Clear();
 
             Console.WriteLine("시작하기 전에, 간단한 질문 몇 가지만 할게요.");
             Thread.Sleep(1600);
-            Console.Clear();
+            Clear();
 
             int _gotMad = 0;
 
@@ -82,7 +92,7 @@
 
                 ConsoleKeyInfo _insert = Console.ReadKey(true);
 
-                Console.Clear();
+                Clear();
 
                 Thread.Sleep(1500);
 
@@ -93,14 +103,14 @@
                         Thread.Sleep(1000);
                         _loopAsk = true;
                         _playerGender = "male";
-                        Console.Clear();
+                        Clear();
                         break;
                     case '2':
                         Console.WriteLine("감사합니다.");
                         Thread.Sleep(1000);
                         _loopAsk = true;
                         _playerGender = "female";
-                        Console.Clear();
+                        Clear();
                         break;
                     case '3':
                         Console.WriteLine("음.");
@@ -109,7 +119,7 @@
                         Thread.Sleep(1000);
                         _loopAsk = true;
                         _playerGender = "another";
-                        Console.Clear();
+                        Clear();
                         break;
                     default:
                         if(_gotMad == 1)
@@ -117,11 +127,11 @@
                             Thread.Sleep(500);
                             Console.WriteLine("하하..");
                             Thread.Sleep(500);
-                            Console.Clear();
+                            Clear();
                             Console.WriteLine("다시해주세요.");
                             _gotMad += 1;
                             Thread.Sleep(500);
-                            Console.Clear();
+                            Clear();
                             break;
                         }
                         if (_gotMad == 2)
@@ -131,13 +141,13 @@
                             Console.ForegroundColor = ConsoleColor.Black;
                             Console.WriteLine("마지막 기회입니다.");
                             Thread.Sleep(500);
-                            Console.Clear();
+                            Clear();
                             Console.BackgroundColor = ConsoleColor.Black;
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.WriteLine("다시 해");
                             _gotMad += 1;
                             Thread.Sleep(300);
-                            Console.Clear();
+                            Clear();
                             break;
                         }
                         if (_gotMad == 3)
@@ -147,8 +157,12 @@
                             Console.ForegroundColor = ConsoleColor.Black;
                             for (int i = 0; i < 50; i++)
                             {
-                                Thread.Sleep(2);
+                                Thread.Sleep(10);
+                                _playerName = "DELETED";
+                                _level = 0;
+                                TakeDamage(2);
                                 Console.WriteLine("DELETE");
+                                Clear();
                             }
                             Thread.Sleep(100);
                             Environment.Exit(0);
@@ -165,7 +179,7 @@
                         Thread.Sleep(100);
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.Clear();
+                        Clear();
                         Thread.Sleep(10);
                         Console.WriteLine(".");
                         Thread.Sleep(20);
@@ -173,11 +187,11 @@
                         Thread.Sleep(30);
                         Console.WriteLine(".");
                         Thread.Sleep(500);
-                        Console.Clear();
+                        Clear();
                         Console.WriteLine("다시해주세요.");
                         _gotMad += 1;
                         Thread.Sleep(300);
-                        Console.Clear();
+                        Clear();
                         break;
                 }
             }
@@ -186,7 +200,7 @@
             Thread.Sleep(500);
             Console.WriteLine("다음.");
             Thread.Sleep(500);
-            Console.Clear();
+            Clear();
 
             bool _askingName = false;
 
@@ -198,12 +212,12 @@
                     Console.ReadKey(true);
                 }
 
-                Console.Clear();
+                Clear();
                 Console.WriteLine("이름이 어떻게 되시나요?");
                 Console.Write("당신의 이름을 입력하세요 : ");
                 _playerName = Console.ReadLine();
 
-                Console.Clear();
+                Clear();
                 Thread.Sleep(1500);
                 Console.WriteLine(_playerName + ".");
                 Thread.Sleep(300);
@@ -213,7 +227,7 @@
 
                 ConsoleKeyInfo _insert = Console.ReadKey(true);
 
-                Console.Clear();
+                Clear();
 
                 switch (_insert.KeyChar)
                 {
@@ -221,18 +235,19 @@
                         Thread.Sleep(300);
                         Console.WriteLine("네," + _playerName + ".");
                         Thread.Sleep(1000);
-                        Console.Clear();
+                        Clear();
                         Console.WriteLine("좋은 이름이네요.");
                         Thread.Sleep(1000);
                         _askingName = true;
-                        Console.Clear();
+                        Clear();
                         break;
                     case '2':
-                        Console.Clear();
+                        _playerName = "";
+                        Clear();
                         Thread.Sleep(300);
                         Console.WriteLine("그럼 바꿀 기회를 드리죠.");
                         Thread.Sleep(1200);
-                        Console.Clear();
+                        Clear();
                         break;
                 }
             }
@@ -244,35 +259,35 @@
                 Console.Write(".");
             }
             //--- 핵심 시작 전 단계
-            Console.Clear();
+            Clear();
             Thread.Sleep(1100);
             Console.WriteLine("흠 이것만 물을게요.");
             Thread.Sleep(1000);
-            Console.Clear();
+            Clear();
 
             while (!_loopAsk)
             {
                 Console.WriteLine("연세는 어찌 되시나요?");
 
-                Console.Clear();
+                Clear();
                 Console.Write("당신의 나이를 입력하세요 :");
                 string ageInput = Console.ReadLine();
 
                 bool _isBig = int.TryParse(ageInput, out _age);
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
 
                 if (!_isBig)
                 {
-                    Console.Clear();
+                    Clear();
                     Console.WriteLine("다시해주세요. (값이 너무 크거나 숫자외의 값을 입력하셨어요)");
                     Thread.Sleep(300);
-                    Console.Clear();
+                    Clear();
                 }
 
                 if (int.Parse(ageInput) <= 10)
                 {
-                    Console.Clear();
+                    Clear();
                     Thread.Sleep(300);
 
                     Console.WriteLine("진심인가요?");
@@ -289,26 +304,26 @@
                     Thread.Sleep(1000);
                     Console.WriteLine("다시해주세요.");
                     Thread.Sleep(300);
-                    Console.Clear();
+                    Clear();
                 }
                 else if(int.Parse(ageInput) > 0 && int.Parse(ageInput) <= 20)
                 {
-                    Console.Clear();
+                    Clear();
                     Thread.Sleep(1000);
                     Console.WriteLine("젊으시네요.");
                     Thread.Sleep(500);
                     _age = int.Parse(ageInput);
-                    Console.Clear();
+                    Clear();
                     break;
                 }
                 else if (int.Parse(ageInput) > 100)
                 {
-                    Console.Clear();
+                    Clear();
                     Thread.Sleep(500);
                     Console.WriteLine("믿기지 않네요.");
                     Thread.Sleep(1200);
                     _age = int.Parse(ageInput);
-                    Console.Clear();
+                    Clear();
                     break;
                 }
                 else if(int.Parse(ageInput) <= 99)
@@ -317,26 +332,27 @@
                     break;
                 }
             }
-            Console.Clear();
+            Clear();
             Thread.Sleep(1200);
 
             if (_age == 24 && (_playerName == "Keres" || _playerName == "케레스" || _playerName == "에단" || _playerName == "Edan") && _playerGender == "male")
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Clear();
+                Clear();
                 Thread.Sleep(300);
                 Console.WriteLine("왜 다시 왔는가.");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("그때의 소멸은 그녀가 스스로 초래한 일.");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("너와 나는 일절 관계없다.");
                 Thread.Sleep(300);
+                TakeDamage(10f);
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Clear();
+                Clear();
 
             }
 
@@ -344,19 +360,20 @@
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Clear();
+                Clear();
                 Thread.Sleep(300);
                 Console.WriteLine("그를 따라하는군.");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("넌 그가 세운 계획의 협력자인가?");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("앞으로의 길에 불행이 가득하기를.");
+                TakeDamage(50f);
                 Thread.Sleep(300);
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Clear();
+                Clear();
 
             }
 
@@ -364,19 +381,20 @@
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Clear();
+                Clear();
                 Thread.Sleep(300);
                 Console.WriteLine("그를 따라하는군.");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("의지의 뜻을 거역하는것인가.");
                 Thread.Sleep(300);
-                Console.Clear();
+                Clear();
                 Console.WriteLine("그는 우리의 세계에 있어 절대악이 되었을터.");
+                TakeDamage(25f);
                 Thread.Sleep(300);
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Clear();
+                Clear();
 
             }
 
@@ -384,19 +402,20 @@
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Clear();
+                Clear();
                 Thread.Sleep(300);
                 Console.WriteLine("그를 따라하는군.");
                 Thread.Sleep(300);
-                Console.Clear();
-                Console.WriteLine("넌 그가 세운 계획의 협력자인가?");
+                Clear();
+                Console.WriteLine("카스티지움은");
                 Thread.Sleep(300);
-                Console.Clear();
-                Console.WriteLine("앞으로의 길에 불행이 가득하기를.");
+                Clear();
+                Console.WriteLine("다른 시간선의 자신을 껄끄러워하지.");
+                TakeDamage(15f);
                 Thread.Sleep(300);
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Clear();
+                Clear();
 
             }
 
@@ -406,16 +425,67 @@
                 Console.WriteLine(".");
             }
             Thread.Sleep(500);
-            Console.Clear();
+            Clear();
             Console.WriteLine("확인했습니다.");
             Thread.Sleep(1000);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Clear();
+            Clear();
             Thread.Sleep(1000);
             Console.WriteLine("환영합니다!");
             Thread.Sleep(500);
             Console.WriteLine("짧은 여정을 함께합시다.");
             Thread.Sleep(1000);
+        }
+
+        static void StatViewer()
+        {
+            
+            int _hpBarAmount = 10;
+
+            Console.SetCursorPosition(75,0);
+            Console.Write("[LEVEL : " + _level + " ]");
+            
+            Console.SetCursorPosition(75, 1);
+            Console.Write("[NAME : " + _playerName + " ]");
+
+            Console.SetCursorPosition(75, 2);
+            Console.Write("[Age : " + _age + " ]");
+
+            //체력바 구현 (체력 10% 이하일땐 점멸)
+            Console.SetCursorPosition(75, 4);
+
+            //현재 HP 비율
+            double _ratio = (double)_currentHp / _maxHp;
+
+            //채워야할 체력바
+            int _filledBar = (int)(_ratio * _hpBarAmount);
+
+            Console.Write("{ HP : ");
+
+            // 체력바 출력
+            for (int i = 0; i < _hpBarAmount; i++)
+            {
+                if (i < _filledBar)
+                    Console.Write("■");  // 채워진 바
+                else
+                    Console.Write("□");  // 빈 바
+            }
+
+            Console.WriteLine($" {_currentHp}/{_maxHp}" + " }");
+
+            Console.SetCursorPosition(_cursorX, _cursorY);
+        }
+
+        static void TakeDamage(float damage)
+        {
+            _currentHp -= damage;
+            if (_currentHp < 0)
+                _currentHp = 0;
+        }
+
+        static void TutorialScenario()
+        {
+            
         }
     }
 }
