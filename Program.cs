@@ -462,13 +462,13 @@ namespace TextGame
 
             Console.Write("{ HP : ");
 
-            // 체력바 출력
+            //체력바 출력
             for (int i = 0; i < _hpBarAmount; i++)
             {
                 if (i < _filledBar)
-                    Console.Write("■");  // 채워진 바
+                    Console.Write("■"); 
                 else
-                    Console.Write("□");  // 빈 바
+                    Console.Write("□");  
             }
 
             Console.WriteLine($" {_currentHp}/{_maxHp}" + " }");
