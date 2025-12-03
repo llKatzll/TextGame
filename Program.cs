@@ -519,6 +519,16 @@ namespace TextGame
             }
         }
 
+        static void Heal(float heal)
+        {
+            _currentHp += heal;
+
+            if (_currentHp > 100)
+            {
+                _currentHp = 100;
+            }
+        }
+
         static void TutorialScenario()
         {
             Thread.Sleep(1000);
@@ -609,7 +619,7 @@ namespace TextGame
             Console.WriteLine("(펄럭이는 종잇장 소리들속에서 나는 질문에 대한 대답을 강요받는다.)");
             Thread.Sleep(4000);
             Clear();
-            Console.Write("1. 아무 답이나 내뱉는다\n2. 물어본다\n3. 여긴 어디냐며 따진다");
+            Console.Write("1. 아무 답이나 내뱉는다\n2. 물어본다\n3. 이 세계에서 내보내달라 소리친다");
 
             while (!_answered)
             {
@@ -669,6 +679,77 @@ namespace TextGame
                         Thread.Sleep(200);
                         Console.Write("나는 자리를 박차고 일어났다.");
                         Thread.Sleep(1300);
+                        Clear();
+                        Console.Write("순식간에 모든 시선이 내 표피에 꽃힌다.");
+                        Thread.Sleep(2000);
+                        Clear();
+                        Console.Write($"\"ㅇ-여긴 어디야!\"");
+                        Thread.Sleep(1500);
+                        Clear();
+                        Console.Write("옆자리 아이의 눈동자엔 사회에 섞이지 못한 정신이상자가 비춰지고 있었다.");
+                        Thread.Sleep(3000);
+                        Clear();
+                        Thread.Sleep(100);
+                        Console.Write($"\"-..날 어서 여기서 꺼내줘!");
+                        for(int i = 0; i < 5; i++)
+                        {
+                            Console.Write("!");
+                            Thread.Sleep(110);
+                        }
+                        Console.Write("\"");
+                        Thread.Sleep(1600);
+                        Clear();
+                        Console.Write($"\"지");
+                        Thread.Sleep(170);
+                        Console.Write("랄");
+                        Thread.Sleep(160);
+                        Console.Write(" 말");
+                        Thread.Sleep(100);
+                        Console.Write("라");
+                        Thread.Sleep(70);
+                        Console.Write("ㄱ-");
+                        Thread.Sleep(60);
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Clear();
+                        Thread.Sleep(2500);
+                        Console.Write("너");
+                        Thread.Sleep(1500);
+                        Clear();
+                        Console.Write(_playerName + ".");
+                        Thread.Sleep(2500);
+                        Clear();
+                        Console.Write("멋대로 행동하지마라.");
+                        for(int i = 0; i < 10; i++)
+                        {
+                            Thread.Sleep(500);
+                            TakeDamage(5f);
+                        }
+                        Thread.Sleep(500);
+                        Clear();
+                        Console.Write("흐름에 동조해라.");
+                        Thread.Sleep(1500);
+                        Clear();
+                        Console.Write("그럼 탈출을 도와줄 수 있게된다.");
+                        for (int i = 0; i < 10; i++)
+                        {
+                            Thread.Sleep(500);
+                            Heal(5f);
+                        }
+                        Thread.Sleep(500);
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Clear();
+                        Thread.Sleep(1300);
+                        Console.Write("아이들이 수근거린다.");
+                        Thread.Sleep(3000);
+                        Clear();
+                        Console.Write("그리고 난 지금 상황을 이해했다.");
+                        Thread.Sleep(3000);
+                        Clear();
+                        Console.Write("내 시간이 되돌려졌구나.");
+                        Thread.Sleep(3000);
+                        Clear();
                         _answered = true;
                         Clear();
                         break;
