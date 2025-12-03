@@ -3,6 +3,7 @@ using System;
 
 namespace TextGame
 {
+    //It took me ten years to find the answer to something, I forgot about it in 2 seconds, that's about it
     internal class Program
     {
         static Stopwatch _playTimer = new Stopwatch();
@@ -23,7 +24,7 @@ namespace TextGame
         static float _currentHp = 100;
         static float _maxHp = 100;
         static float _atk = 3 ;
-        static float _def = 40;
+        static float _def = 50;
         static float _dgd = 30;
 
         // 장비 스탯
@@ -42,8 +43,9 @@ namespace TextGame
 
             //Color holder
             ConsoleColor prevColor = Console.ForegroundColor;
-
             Console.SetCursorPosition(_cursorX,_cursorY);
+
+            _playTimer.Start();
 
             GameStart();
 
@@ -287,8 +289,8 @@ namespace TextGame
                 if (!int.TryParse(ageInput, out _age))
                 {
                     Clear();
-                    Console.WriteLine("다시해주세요. (숫자만 입력해주세요)");
-                    Thread.Sleep(1200);
+                    Console.WriteLine("다시해주세요. (숫자만 입력해주세요 ※너무 큰 숫자도 안됩니다.)");
+                    Thread.Sleep(1700);
                     continue;
                 }
 
@@ -455,9 +457,9 @@ namespace TextGame
             Console.ForegroundColor = ConsoleColor.White;
             Clear();
             Thread.Sleep(1000);
-            Console.WriteLine("환영합니다!");
+            Console.WriteLine("환영합니다");
             Thread.Sleep(500);
-            Console.WriteLine("짧은 여정을 함께합시다.");
+            Console.WriteLine("눈을 뜨십시오.");
             Thread.Sleep(1000);
         }
 
@@ -519,7 +521,28 @@ namespace TextGame
 
         static void TutorialScenario()
         {
-            while (true)
+            Thread.Sleep(1000);
+            Clear();
+            Console.WriteLine("새하얀 공간에서 눈을 떴다.");
+            Thread.Sleep(2000);
+            Clear();
+            Console.WriteLine("원목의 냄새와 희미한 꽃향이 코를 간지럽힌다.");
+            Thread.Sleep(2500);
+            Clear();
+            Console.WriteLine("내 이름은-");
+            Thread.Sleep(2300);
+            Clear();
+            Console.WriteLine(_playerName + ". 기억났다.");
+            Thread.Sleep(2000);
+            Clear();
+            Console.WriteLine("분명 나는 아까-");
+            Thread.Sleep(1700);
+            Clear();
+            Console.Write("1. (기억이 나지 않아 말을 삼킨다.) \n2. (무언가에 열중하고 있었다.)\n3. (특별함 없이 살아가고 있었다.)");
+            
+            bool _answered = false;
+
+            while (!_answered)
             {
                 ConsoleKeyInfo _insert = Console.ReadKey(true);
 
@@ -528,13 +551,189 @@ namespace TextGame
                     Console.ReadKey(true);
                 }
 
-                if (_insert.Key == ConsoleKey.Q)
+                switch (_insert.KeyChar)
                 {
-                    Console.WriteLine("Test : 데미지를 1 입혔습니다.");
-                    TakeDamage(1);
-                    Clear();
+                    case '1':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write("...");
+                        Thread.Sleep(1000);
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '2':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write("무엇인진 잊어버렸지만..");
+                        Thread.Sleep(1600);
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '3':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write("여긴 어디지..?");
+                        Thread.Sleep(1700);
+                        _answered = true;
+                        Clear();
+                        break;
+                    default:
+                        break;
                 }
             }
+
+            _answered = false;
+            
+            Clear();
+            Console.WriteLine($"\"(야!)\"");
+            Thread.Sleep(700);
+            Clear();
+            Console.WriteLine($"\"(네 차례야! {_playerName}!)\"");
+            Thread.Sleep(2000);
+            Clear();
+            Console.WriteLine("(옆자리에 있던 한 아이가 내게 은밀히 주의를 주었다.)");
+            Thread.Sleep(2000);
+            Clear();
+            Console.Write("(고개를 아래로 내리자,)");
+            Thread.Sleep(1100);
+            Clear();
+            Console.WriteLine("(손에는 처음보는 교본이 쥐어져있었다.)");
+            Thread.Sleep(2000);
+            Clear();
+            Console.WriteLine("(그때, 교탁으로 보이는 곳에서 선생님으로 추정되는 이가 입을 열었다.)");
+            Thread.Sleep(3500);
+            Clear();
+            Console.WriteLine($"\"24열 8번 문항, 정답이 뭐였죠 {_playerName}?\"");
+            Thread.Sleep(3500);
+            Clear();
+            Console.WriteLine("(펄럭이는 종잇장 소리들속에서 나는 질문에 대한 대답을 강요받는다.)");
+            Thread.Sleep(4000);
+            Clear();
+            Console.Write("1. 아무 답이나 내뱉는다\n2. 물어본다\n3. 여긴 어디냐며 따진다");
+
+            while (!_answered)
+            {
+                ConsoleKeyInfo _insert = Console.ReadKey(true);
+
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+
+                switch (_insert.KeyChar)
+                {
+                    case '1':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write("...");
+                        Thread.Sleep(1000);
+                        Clear();
+                        Console.Write($"\"3번?\"");
+                        Thread.Sleep(1000);
+                        Clear();
+                        Console.Write("내 목소리가 교실의 정적을 깼다.");
+                        Thread.Sleep(1500);
+                        Clear();
+                        Console.Write("오답이라는 말과 함께 나는 어느새 주변 아이들의 웃음거리가 되어있었다.");
+                        Thread.Sleep(2500);
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '2':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write($"\"(정답이 뭔지 알아?)\"");
+                        Thread.Sleep(1200);
+                        Clear();
+                        Console.Write($"\"(뭐?)\"");
+                        Thread.Sleep(900);
+                        Clear();
+                        Console.Write("아이가 어이없다는 듯이 물었다.");
+                        Thread.Sleep(1400);
+                        Clear();
+                        Console.Write($"\"(하.. 이번만이다)\"");
+                        Thread.Sleep(1600);
+                        Clear();
+                        Console.Write($"\"(4, 루트)\"");
+                        _divine++;
+                        Thread.Sleep(1200);
+                        Clear();
+                        Console.Write("나는 그대로 대답하였고, 주변의 놀라는 반응과 함께 위기는 넘어가졌다.");
+                        Thread.Sleep(2500);
+                        Clear();
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '3':
+                        Clear();
+                        Thread.Sleep(200);
+                        Console.Write("나는 자리를 박차고 일어났다.");
+                        Thread.Sleep(1300);
+                        _answered = true;
+                        Clear();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //while (true)
+            //{
+            //    ConsoleKeyInfo _insert = Console.ReadKey(true);
+
+            //    while (Console.KeyAvailable)
+            //    {
+            //        Console.ReadKey(true);
+            //    }
+
+            //    if (_insert.Key == ConsoleKey.Q)
+            //    {
+            //        Console.WriteLine("Test : 데미지를 1 입혔습니다.");
+            //        TakeDamage(1);
+            //        Clear();
+            //    }
+            //}
         }
+        static void Choose() //템플릿
+        {
+            //------------------------------
+            bool _answered = false;
+
+            while (!_answered)
+            {
+                ConsoleKeyInfo _insert = Console.ReadKey(true);
+
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+
+                switch (_insert.KeyChar)
+                {
+                    case '1':
+                        Thread.Sleep(200);
+
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '2':
+                        Thread.Sleep(200);
+
+                        _answered = true;
+                        Clear();
+                        break;
+                    case '3':
+                        Thread.Sleep(200);
+
+                        _answered = true;
+                        Clear();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //-----------------------
+        }
+
     }
 }
