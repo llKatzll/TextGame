@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System;
+using System.Threading;
 
 namespace TextGame
 {
@@ -23,7 +24,7 @@ namespace TextGame
         static int _level = 1;
         static float _currentHp = 100;
         static float _maxHp = 100;
-        static float _atk = 3 ;
+        static float _atk = 3;
         static float _def = 50;
         static float _dgd = 30;
 
@@ -41,23 +42,91 @@ namespace TextGame
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.CursorVisible = false;
 
-            //Color holder
-            ConsoleColor prevColor = Console.ForegroundColor;
-            Console.SetCursorPosition(_cursorX,_cursorY);
+            Console.SetCursorPosition(_cursorX, _cursorY);
 
             _playTimer.Start();
 
             GameStart();
-
             TutorialScenario();
         }
 
+        // --------------------------------
+        // 공통 유틸
+        // --------------------------------
         static void Clear()
         {
             Console.Clear();
             StatViewer();
         }
 
+        static void StatViewer()
+        {
+            int _hpBarAmount = 10;
+
+            Console.SetCursorPosition(75, 0);
+            Console.Write("[LEVEL : " + _level + " ]");
+
+            Console.SetCursorPosition(75, 1);
+            Console.Write("[NAME : " + _playerName + " ]");
+
+            Console.SetCursorPosition(75, 2);
+            Console.Write("[Age : " + _age + " ]");
+
+            //체력바 구현 (체력 칸 3칸이하일때 붉은 색)
+            Console.SetCursorPosition(75, 4);
+
+            //현재 HP 비율
+            double _ratio = (double)_currentHp / _maxHp;
+
+            //채워야할 체력바
+            int _filledBar = (int)(_ratio * _hpBarAmount);
+
+            Console.Write("{ HP : ");
+
+            //체력바 출력
+            for (int i = 0; i < _hpBarAmount; i++)
+            {
+                if (i < _filledBar)
+                    Console.Write("■");
+                else
+                    Console.Write("□");
+            }
+
+            Console.WriteLine($" {_currentHp}/{_maxHp}" + " }");
+
+            Console.SetCursorPosition(75, 6);
+            Console.Write("[ ATK : " + _atk + " ]");
+            Console.SetCursorPosition(75, 7);
+            Console.Write("[ DEF Chance : " + _def + " ]");
+            Console.SetCursorPosition(75, 8);
+            Console.Write("[ DGD Chance : " + _dgd + " ]");
+
+            Console.SetCursorPosition(_cursorX, _cursorY);
+        }
+
+        static void TakeDamage(float damage)
+        {
+            _currentHp -= damage;
+
+            if (_currentHp < 0)
+            {
+                _currentHp = 0;
+            }
+        }
+
+        static void Heal(float heal)
+        {
+            _currentHp += heal;
+
+            if (_currentHp > 100)
+            {
+                _currentHp = 100;
+            }
+        }
+
+        // --------------------------------
+        // 게임 시작 / 튜토리얼
+        // --------------------------------
         static void GameStart()
         {
             Thread.Sleep(1000);
@@ -128,7 +197,7 @@ namespace TextGame
                         Clear();
                         break;
                     default:
-                        if(_gotMad == 1)
+                        if (_gotMad == 1)
                         {
                             Thread.Sleep(500);
                             Console.WriteLine("하하..");
@@ -259,7 +328,7 @@ namespace TextGame
             }
             Thread.Sleep(300);
             Console.WriteLine(_playerName + ".");
-            for(int i = 0;i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Thread.Sleep(200);
                 Console.Write(".");
@@ -337,7 +406,7 @@ namespace TextGame
                     Clear();
                 }
             }
-        
+
             Clear();
             Thread.Sleep(1200);
 
@@ -359,7 +428,6 @@ namespace TextGame
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Clear();
-
             }
 
             if (_age == 25 && (_playerName == "Katz" || _playerName == "카츠") && _playerGender == "male")
@@ -380,7 +448,6 @@ namespace TextGame
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Clear();
-
             }
 
             if (_age == 25 && (_playerName == "Lev" || _playerName == "레브") && _playerGender == "male")
@@ -401,7 +468,6 @@ namespace TextGame
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Clear();
-
             }
 
             if (_age == 28 && (_playerName == "Chronos" || _playerName == "크로노스") && _playerGender == "male")
@@ -442,7 +508,6 @@ namespace TextGame
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Clear();
-
             }
 
             for (int i = 0; i < 3; i++)
@@ -461,72 +526,6 @@ namespace TextGame
             Thread.Sleep(500);
             Console.WriteLine("눈을 뜨십시오.");
             Thread.Sleep(1000);
-        }
-
-        static void StatViewer()
-        {
-            
-            int _hpBarAmount = 10;
-
-            Console.SetCursorPosition(75,0);
-            Console.Write("[LEVEL : " + _level + " ]");
-            
-            Console.SetCursorPosition(75, 1);
-            Console.Write("[NAME : " + _playerName + " ]");
-
-            Console.SetCursorPosition(75, 2);
-            Console.Write("[Age : " + _age + " ]");
-
-            //체력바 구현 (체력 칸 3칸이하일때 붉은 색)
-            Console.SetCursorPosition(75, 4);
-
-            //현재 HP 비율
-            double _ratio = (double)_currentHp / _maxHp;
-
-            //채워야할 체력바
-            int _filledBar = (int)(_ratio * _hpBarAmount);
-
-            Console.Write("{ HP : ");
-
-            //체력바 출력
-            for (int i = 0; i < _hpBarAmount; i++)
-            {
-                if (i < _filledBar)
-                    Console.Write("■"); 
-                else
-                    Console.Write("□");  
-            }
-
-            Console.WriteLine($" {_currentHp}/{_maxHp}" + " }");
-
-            Console.SetCursorPosition(75, 6);
-            Console.Write("[ ATK : " + _atk + " ]");
-            Console.SetCursorPosition(75, 7);
-            Console.Write("[ DEF Chance : " + _def + " ]");
-            Console.SetCursorPosition(75, 8);
-            Console.Write("[ DGD Chance : " + _dgd + " ]");
-
-            Console.SetCursorPosition(_cursorX, _cursorY);
-        }
-
-        static void TakeDamage(float damage)
-        {
-            _currentHp -= damage;
-
-            if (_currentHp < 0)
-            {
-                _currentHp = 0;
-            }
-        }
-
-        static void Heal(float heal)
-        {
-            _currentHp += heal;
-
-            if (_currentHp > 100)
-            {
-                _currentHp = 100;
-            }
         }
 
         static void TutorialScenario()
@@ -549,7 +548,7 @@ namespace TextGame
             Thread.Sleep(1700);
             Clear();
             Console.Write("1. (기억이 나지 않아 말을 삼킨다.) \n2. (무언가에 열중하고 있었다.)\n3. (특별함 없이 살아가고 있었다.)");
-            
+
             bool _answered = false;
 
             while (!_answered)
@@ -593,7 +592,7 @@ namespace TextGame
             }
 
             _answered = false;
-            
+
             Clear();
             Console.WriteLine($"\"(야!)\"");
             Thread.Sleep(700);
@@ -691,7 +690,7 @@ namespace TextGame
                         Clear();
                         Thread.Sleep(100);
                         Console.Write($"\"-..날 어서 여기서 꺼내줘!");
-                        for(int i = 0; i < 5; i++)
+                        for (int i = 0; i < 5; i++)
                         {
                             Console.Write("!");
                             Thread.Sleep(110);
@@ -720,20 +719,22 @@ namespace TextGame
                         Thread.Sleep(2500);
                         Clear();
                         Console.Write("멋대로 행동하지마라.");
-                        for(int i = 0; i < 10; i++)
+                        for (int i = 0; i < 10; i++)
                         {
                             Thread.Sleep(500);
                             TakeDamage(5f);
+                            Clear();
                         }
                         Thread.Sleep(500);
                         Clear();
                         Console.Write("흐름에 동조해라.");
                         Thread.Sleep(1500);
                         Clear();
-                        Console.Write("그럼 탈출을 도와줄 수 있게된다.");
+                        Console.Write("그럼 탈출을 도와주지.");
                         for (int i = 0; i < 10; i++)
                         {
                             Thread.Sleep(500);
+                            Clear();
                             Heal(5f);
                         }
                         Thread.Sleep(500);
@@ -757,24 +758,8 @@ namespace TextGame
                         break;
                 }
             }
-
-            //while (true)
-            //{
-            //    ConsoleKeyInfo _insert = Console.ReadKey(true);
-
-            //    while (Console.KeyAvailable)
-            //    {
-            //        Console.ReadKey(true);
-            //    }
-
-            //    if (_insert.Key == ConsoleKey.Q)
-            //    {
-            //        Console.WriteLine("Test : 데미지를 1 입혔습니다.");
-            //        TakeDamage(1);
-            //        Clear();
-            //    }
-            //}
         }
+
         static void Choose() //템플릿
         {
             //------------------------------
@@ -816,5 +801,55 @@ namespace TextGame
             //-----------------------
         }
 
+        // --------------------------------
+        // 텍스트 출력 관련 함수
+        // --------------------------------
+
+        /// <summary>
+        /// charDelay : 글자마다 대기(ms), 0이면 한 번에 출력
+        /// afterDelayMs : 문장 출력 후 추가 대기(ms)
+        /// newLine : true면 줄바꿈, false면 줄바꿈 없이 이어서 출력
+        /// </summary>
+        
+        // 사용 예시 : PrintText("안녕하세요",25,1000,true);
+
+        static void PrintText(string text, int charDelay = 0, int afterDelayMs = 0, bool newLine = true)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                if (newLine) Console.WriteLine();
+                return;
+            }
+
+            if (charDelay <= 0)
+            {
+                if (newLine) Console.WriteLine(text);
+                else Console.Write(text);
+            }
+            else
+            {
+                foreach (char c in text)
+                {
+                    Console.Write(c);
+                    Thread.Sleep(charDelay);
+                }
+                if (newLine) Console.WriteLine();
+            }
+
+            if (afterDelayMs > 0)
+                Thread.Sleep(afterDelayMs);
+        }
+
+        // 줄바꿈 있는 버전
+        static void PrintLine(string text, int charDelay = 0, int afterDelayMs = 0)
+        {
+            PrintText(text, charDelay, afterDelayMs, true);
+        }
+
+        // 줄바꿈 없는 버전
+        static void PrintInline(string text, int charDelay = 0, int afterDelayMs = 0)
+        {
+            PrintText(text, charDelay, afterDelayMs, false);
+        }
     }
 }
